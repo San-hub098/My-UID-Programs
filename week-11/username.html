@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Username Validation</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #414144;
+        }
+        .container {
+            background: rgb(54, 52, 49);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #d30f0f;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+        }
+        /* Fixed height for the message container prevents layout jumping */
+        .message-area {
+            height: 20px;
+            margin-top: 5px;
+        }
+        #error-msg {
+            color: #d93025;
+            font-size: 0.85rem;
+            margin: 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <label for="username"><b>Username</b></label>
+    <input type="text" id="username" placeholder="Enter username..." autocomplete="off">
+    
+    <div class="message-area">
+        <p id="error-msg">Must be at least 5 characters.</p>
+    </div>
+</div>
+
+<script>
+    const usernameInput = document.getElementById('username');
+    const errorMsg = document.getElementById('error-msg');
+
+    usernameInput.addEventListener('input', () => {
+        const value = usernameInput.value;
+        
+        // Logic: Show error if there is text, but it's shorter than 5 chars
+        if (value.length > 0 && value.length < 5) {
+            errorMsg.style.display = 'block';
+            usernameInput.style.borderColor = '#d93025';
+        } else {
+            errorMsg.style.display = 'none';
+            usernameInput.style.borderColor = '#ccc';
+        }
+    });
+</script>
+
+</body>
+</html>

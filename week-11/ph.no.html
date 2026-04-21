@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mobile Number Validation</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            padding-top: 50px; 
+            background: #344f6a; 
+        }
+        .form-card { 
+            background: rgb(189, 66, 66); 
+            padding: 2rem; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            width: 320px; 
+        }
+        label { display: block; margin-bottom: 8px; font-weight: 600; }
+        
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            border: 2px solid #dee2e6; 
+            border-radius: 6px; 
+            outline: none; 
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        /* Error States */
+        input.invalid { border-color: #dc3545; background-color: #fff8f8; }
+        .error-msg { 
+            color: #dc3545; 
+            font-size: 0.85rem; 
+            margin-top: 6px; 
+            display: none; 
+        }
+
+        button { 
+            width: 100%; 
+            margin-top: 20px;
+            padding: 12px; 
+            background: #28a745; 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-card">
+    <form id="phoneForm">
+        <label for="mobile">Mobile Number</label>
+        <input type="text" id="mobile" placeholder="e.g. 9876543210" maxlength="10">
+        <p id="phoneError" class="error-msg">Please enter a valid 10-digit number.</p>
+        
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    const phoneInput = document.getElementById('mobile');
+    const phoneError = document.getElementById('phoneError');
+    const phoneForm = document.getElementById('phoneForm');
+
+    // The validation function
+    function validatePhone() {
+        const value = phoneInput.value;
+        // Regex: Checks if the string is exactly 10 digits (0-9)
+        const phonePattern = /^\d{10}$/;
+
+        if (!phonePattern.test(value) && value.length > 0) {
+            phoneInput.classList.add('invalid');
+            phoneError.style.display = 'block';
+            return false;
+        } else {
+            phoneInput.classList.remove('invalid');
+            phoneError.style.display = 'none';
+            return true;
+        }
+    }
+
+    // Triggered when the user clicks outside the input or tabs away
+    phoneInput.addEventListener('blur', validatePhone);
+
+    // Optional: Also clear error while typing to be helpful
+    phoneInput.addEventListener('input', () => {
+        if (phoneInput.value.length === 10) {
+            validatePhone();
+        }
+    });
+
+    // Prevent form submission if invalid
+    phoneForm.addEventListener('submit', (e) => {
+        if (!validatePhone()) {
+            e.preventDefault();
+            alert("Please fix the errors before submitting.");
+        } else if (phoneInput.value === "") {
+            e.preventDefault();
+            alert("Phone number is required.");
+        } else {
+            alert("Success! Form submitted.");
+        }
+    });
+</script>
+
+</body>
+</html>
